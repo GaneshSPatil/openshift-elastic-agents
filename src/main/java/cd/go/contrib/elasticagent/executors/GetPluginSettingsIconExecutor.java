@@ -31,7 +31,7 @@ public class GetPluginSettingsIconExecutor implements RequestExecutor {
     public GoPluginApiResponse execute() throws Exception {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("content_type", "image/svg+xml");
-        jsonObject.addProperty("data", Base64.getEncoder().encodeToString(Util.readResourceBytes("/kubernetes_logo.svg")));
+        jsonObject.addProperty("data", Base64.getEncoder().encodeToString(Util.readResourceBytes("/plugin-icon.svg")));
         return DefaultGoPluginApiResponse.success(GSON.toJson(jsonObject));
     }
 }

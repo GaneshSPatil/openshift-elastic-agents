@@ -36,6 +36,6 @@ public class GetPluginSettingsIconExecutorTest {
         HashMap<String, String> hashMap = new Gson().fromJson(response.responseBody(), new TypeToken<HashMap<String, String>>(){}.getType());
         assertThat(hashMap.size(), is(2));
         assertThat(hashMap.get("content_type"), is("image/svg+xml"));
-        assertThat(Util.readResourceBytes("/kubernetes_logo.svg"), is(Base64.getDecoder().decode(hashMap.get("data"))));
+        assertThat(Util.readResourceBytes("/plugin-icon.svg"), is(Base64.getDecoder().decode(hashMap.get("data"))));
     }
 }
