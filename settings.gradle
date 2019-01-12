@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-rootProject.name = 'kubernetes-elastic-agent'
+rootProject.name = 'openshift-elastic-agent'
