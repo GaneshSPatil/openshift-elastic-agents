@@ -30,14 +30,14 @@ group = 'cd.go.contrib'
 version = project.fullVersion
 
 project.ext.pluginDesc = [
-        id         : 'cd.go.contrib.elasticagent.kubernetes',
-        repo       : 'kubernetes-elastic-agents',
+        id         : 'cd.go.contrib.elasticagent.openshift',
+        repo       : 'openshift-elastic-agents',
         version    : project.version,
         goCdVersion: '18.10.0',
-        name       : 'Kubernetes Elastic Agent Plugin',
-        description: 'Kubernetes Based Elastic Agent Plugins for GoCD',
+        name       : 'Openshift Elastic Agent Plugin',
+        description: 'Kubernetes Based GoCD Elastic Agent Plugins for Openshift',
         vendorName : 'GoCD Contributors',
-        vendorUrl  : 'https://github.com/gocd/kubernetes-elastic-agents'
+        vendorUrl  : 'https://github.com/GaneshSPatil/openshift-elastic-agents'
 ]
 
 repositories {
