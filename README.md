@@ -1,6 +1,6 @@
-# Kubernetes Elastic agent plugin for GoCD
+# Kubernetes Based GoCD Elastic Agent Plugins for Openshift
 
-Kubernetes Elastic Agent Plugin provides production grade support to run GoCD Elastic Agents on Kubernetes Cluster. 
+Kubernetes Elastic Agent Plugin provides production grade support to run GoCD Elastic Agents on Openshift OKD Kubernetes Cluster. 
 
 # Documentation
 
