@@ -17,22 +17,22 @@
 package cd.go.contrib.elasticagent.executors;
 
 import cd.go.contrib.elasticagent.AgentInstances;
-import cd.go.contrib.elasticagent.KubernetesInstance;
+import cd.go.contrib.elasticagent.OpenshiftInstance;
 import cd.go.contrib.elasticagent.PluginRequest;
 import cd.go.contrib.elasticagent.RequestExecutor;
 import cd.go.contrib.elasticagent.requests.CreateAgentRequest;
 import com.thoughtworks.go.plugin.api.response.DefaultGoPluginApiResponse;
 import com.thoughtworks.go.plugin.api.response.GoPluginApiResponse;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static java.text.MessageFormat.format;
 
 public class CreateAgentRequestExecutor implements RequestExecutor {
-    private final AgentInstances<KubernetesInstance> agentInstances;
+    private final AgentInstances<OpenshiftInstance> agentInstances;
     private final PluginRequest pluginRequest;
     private final CreateAgentRequest request;
 
-    public CreateAgentRequestExecutor(CreateAgentRequest request, AgentInstances<KubernetesInstance> agentInstances, PluginRequest pluginRequest) {
+    public CreateAgentRequestExecutor(CreateAgentRequest request, AgentInstances<OpenshiftInstance> agentInstances, PluginRequest pluginRequest) {
         this.request = request;
         this.agentInstances = agentInstances;
         this.pluginRequest = pluginRequest;

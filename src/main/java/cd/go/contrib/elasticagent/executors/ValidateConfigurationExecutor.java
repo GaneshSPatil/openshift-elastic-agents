@@ -25,17 +25,15 @@ import cd.go.contrib.elasticagent.model.ServerInfo;
 import cd.go.contrib.elasticagent.requests.ValidatePluginSettingsRequest;
 import com.thoughtworks.go.plugin.api.response.DefaultGoPluginApiResponse;
 import com.thoughtworks.go.plugin.api.response.GoPluginApiResponse;
-import io.fabric8.kubernetes.api.model.DoneableNamespace;
 import io.fabric8.kubernetes.api.model.Namespace;
 import io.fabric8.kubernetes.client.KubernetesClient;
-import io.fabric8.kubernetes.client.dsl.Resource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static cd.go.contrib.elasticagent.executors.GetPluginConfigurationExecutor.*;
 import static cd.go.contrib.elasticagent.utils.Util.GSON;
 import static java.text.MessageFormat.format;

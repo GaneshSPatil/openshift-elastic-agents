@@ -30,7 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.IOException;
 import java.util.*;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static cd.go.contrib.elasticagent.executors.GetProfileMetadataExecutor.*;
 import static cd.go.contrib.elasticagent.utils.Util.GSON;
 import static java.text.MessageFormat.format;

@@ -77,15 +77,15 @@ public class KubernetesAgentInstancesIntegrationTest {
 
     @Test
     public void shouldCreateKubernetesPodForCreateAgentRequest() throws Exception {
-        KubernetesInstance kubernetesInstance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
+        OpenshiftInstance openshiftInstance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
 
-        assertTrue(kubernetesAgentInstances.instanceExists(kubernetesInstance));
+        assertTrue(kubernetesAgentInstances.instanceExists(openshiftInstance));
     }
 
     @Test
     public void shouldCreateKubernetesPodWithContainerSpecification() throws Exception {
         ArgumentCaptor<Pod> argumentCaptor = ArgumentCaptor.forClass(Pod.class);
-        KubernetesInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
+        OpenshiftInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
         verify(pods).create(argumentCaptor.capture());
         Pod elasticAgentPod = argumentCaptor.getValue();
 
@@ -105,7 +105,7 @@ public class KubernetesAgentInstancesIntegrationTest {
     public void shouldCreateKubernetesPodWithPrivilegedMod() throws Exception {
         createAgentRequest.properties().put(PRIVILEGED.getKey(), "true");
         ArgumentCaptor<Pod> argumentCaptor = ArgumentCaptor.forClass(Pod.class);
-        KubernetesInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
+        OpenshiftInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
         verify(pods).create(argumentCaptor.capture());
         Pod elasticAgentPod = argumentCaptor.getValue();
 
@@ -139,7 +139,7 @@ public class KubernetesAgentInstancesIntegrationTest {
     @Test
     public void shouldCreateKubernetesPodWithPodMetadata() throws Exception {
         ArgumentCaptor<Pod> argumentCaptor = ArgumentCaptor.forClass(Pod.class);
-        KubernetesInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
+        OpenshiftInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
         verify(pods).create(argumentCaptor.capture());
 
         Pod elasticAgentPod = argumentCaptor.getValue();
@@ -163,7 +163,7 @@ public class KubernetesAgentInstancesIntegrationTest {
     @Test
     public void shouldCreateKubernetesPodWithGoCDElasticAgentContainerContainingEnvironmentVariables() throws Exception {
         ArgumentCaptor<Pod> argumentCaptor = ArgumentCaptor.forClass(Pod.class);
-        KubernetesInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
+        OpenshiftInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
         verify(pods).create(argumentCaptor.capture());
         Pod elasticAgentPod = argumentCaptor.getValue();
 
@@ -222,9 +222,9 @@ public class KubernetesAgentInstancesIntegrationTest {
     @Test
     public void usingPodYamlConfigurations_shouldCreateKubernetesPodForCreateAgentRequest() throws Exception {
         createAgentRequest = CreateAgentRequestMother.createAgentRequestUsingPodYaml();
-        KubernetesInstance kubernetesInstance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
+        OpenshiftInstance openshiftInstance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
 
-        assertTrue(kubernetesAgentInstances.instanceExists(kubernetesInstance));
+        assertTrue(kubernetesAgentInstances.instanceExists(openshiftInstance));
     }
 
     @Test
@@ -251,7 +251,7 @@ public class KubernetesAgentInstancesIntegrationTest {
         createAgentRequest = CreateAgentRequestMother.createAgentRequestUsingPodYaml();
 
         ArgumentCaptor<Pod> argumentCaptor = ArgumentCaptor.forClass(Pod.class);
-        KubernetesInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
+        OpenshiftInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
         verify(pods).create(argumentCaptor.capture());
 
         Pod elasticAgentPod = argumentCaptor.getValue();
@@ -281,7 +281,7 @@ public class KubernetesAgentInstancesIntegrationTest {
         createAgentRequest = CreateAgentRequestMother.createAgentRequestUsingPodYaml();
 
         ArgumentCaptor<Pod> argumentCaptor = ArgumentCaptor.forClass(Pod.class);
-        KubernetesInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
+        OpenshiftInstance instance = kubernetesAgentInstances.create(createAgentRequest, settings, mockedPluginRequest);
         verify(pods).create(argumentCaptor.capture());
         Pod elasticAgentPod = argumentCaptor.getValue();
 

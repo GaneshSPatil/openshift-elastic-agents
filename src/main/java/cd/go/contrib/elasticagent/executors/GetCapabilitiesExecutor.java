@@ -21,7 +21,7 @@ import cd.go.contrib.elasticagent.model.Capabilities;
 import com.thoughtworks.go.plugin.api.response.DefaultGoPluginApiResponse;
 import com.thoughtworks.go.plugin.api.response.GoPluginApiResponse;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static com.thoughtworks.go.plugin.api.response.DefaultGoApiResponse.SUCCESS_RESPONSE_CODE;
 
 public class GetCapabilitiesExecutor implements RequestExecutor {

@@ -26,7 +26,7 @@ public class CreateAgentRequestExecutorTest {
     @Test
     public void shouldAskDockerContainersToCreateAnAgent() throws Exception {
         CreateAgentRequest request = new CreateAgentRequest();
-        AgentInstances<KubernetesInstance> agentInstances = mock(KubernetesAgentInstances.class);
+        AgentInstances<OpenshiftInstance> agentInstances = mock(KubernetesAgentInstances.class);
         PluginRequest pluginRequest = mock(PluginRequest.class);
         PluginSettings settings = mock(PluginSettings.class);
         when(pluginRequest.getPluginSettings()).thenReturn(settings);

@@ -20,7 +20,7 @@ import io.fabric8.kubernetes.client.ConfigBuilder;
 import io.fabric8.kubernetes.client.DefaultKubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClient;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static java.text.MessageFormat.format;
 
 public class KubernetesClientFactory {

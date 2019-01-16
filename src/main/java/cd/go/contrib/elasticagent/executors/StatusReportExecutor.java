@@ -27,7 +27,7 @@ import io.fabric8.kubernetes.client.KubernetesClient;
 
 import java.net.URL;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 
 public class StatusReportExecutor {
     private final PluginRequest pluginRequest;

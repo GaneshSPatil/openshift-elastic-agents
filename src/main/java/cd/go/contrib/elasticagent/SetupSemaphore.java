@@ -23,10 +23,10 @@ import java.util.concurrent.Semaphore;
 
 class SetupSemaphore implements Runnable {
     private final Integer maxAllowedPendingPods;
-    private final Map<String, KubernetesInstance> instances;
+    private final Map<String, OpenshiftInstance> instances;
     private final Semaphore semaphore;
 
-    public SetupSemaphore(Integer maxAllowedPendingPods, Map<String, KubernetesInstance> instances, Semaphore semaphore) {
+    public SetupSemaphore(Integer maxAllowedPendingPods, Map<String, OpenshiftInstance> instances, Semaphore semaphore) {
         this.maxAllowedPendingPods = maxAllowedPendingPods;
         this.instances = instances;
         this.semaphore = semaphore;
@@ -34,7 +34,7 @@ class SetupSemaphore implements Runnable {
 
     @Override
     public void run() {
-        List<KubernetesInstance> pendingInstances = getPendingInstances(instances);
+        List<OpenshiftInstance> pendingInstances = getPendingInstances(instances);
         int totalPendingPods = pendingInstances.size();
         int availablePermits = maxAllowedPendingPods - totalPendingPods;
 
@@ -51,11 +51,11 @@ class SetupSemaphore implements Runnable {
         }
     }
 
-    private List<KubernetesInstance> getPendingInstances(Map<String, KubernetesInstance> instances) {
-        ArrayList<KubernetesInstance> pendingInstances = new ArrayList<>();
-        for (KubernetesInstance kubernetesInstance : instances.values()) {
-            if (kubernetesInstance.isPending()) {
-                pendingInstances.add(kubernetesInstance);
+    private List<OpenshiftInstance> getPendingInstances(Map<String, OpenshiftInstance> instances) {
+        ArrayList<OpenshiftInstance> pendingInstances = new ArrayList<>();
+        for (OpenshiftInstance openshiftInstance : instances.values()) {
+            if (openshiftInstance.isPending()) {
+                pendingInstances.add(openshiftInstance);
             }
         }
 

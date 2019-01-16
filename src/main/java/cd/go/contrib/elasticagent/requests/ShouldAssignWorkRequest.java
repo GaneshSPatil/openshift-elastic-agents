@@ -72,7 +72,7 @@ public class ShouldAssignWorkRequest {
         return properties;
     }
 
-    public RequestExecutor executor(AgentInstances<KubernetesInstance> agentInstances) {
+    public RequestExecutor executor(AgentInstances<OpenshiftInstance> agentInstances) {
         return new ShouldAssignWorkRequestExecutor(this, agentInstances);
     }
 

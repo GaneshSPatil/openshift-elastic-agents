@@ -86,7 +86,7 @@ public class ServerPingRequestExecutorTest extends BaseTest {
     public void testShouldDisableIdleAgents() throws Exception {
         String agentId = UUID.randomUUID().toString();
         final Agents agents = new Agents(Arrays.asList(new Agent(agentId, Agent.AgentState.Idle, Agent.BuildState.Idle, Agent.ConfigState.Enabled)));
-        AgentInstances<KubernetesInstance> agentInstances = new KubernetesAgentInstances(factory);
+        AgentInstances<OpenshiftInstance> agentInstances = new KubernetesAgentInstances(factory);
 
         PluginRequest pluginRequest = mock(PluginRequest.class);
         when(pluginRequest.getPluginSettings()).thenReturn(createSettings());
@@ -111,7 +111,7 @@ public class ServerPingRequestExecutorTest extends BaseTest {
     public void testShouldTerminateDisabledAgents() throws Exception {
         String agentId = UUID.randomUUID().toString();
         final Agents agents = new Agents(Arrays.asList(new Agent(agentId, Agent.AgentState.Idle, Agent.BuildState.Idle, Agent.ConfigState.Disabled)));
-        AgentInstances<KubernetesInstance> agentInstances = new KubernetesAgentInstances(factory);
+        AgentInstances<OpenshiftInstance> agentInstances = new KubernetesAgentInstances(factory);
 
         PluginRequest pluginRequest = mock(PluginRequest.class);
         when(pluginRequest.getPluginSettings()).thenReturn(createSettings());
@@ -128,7 +128,7 @@ public class ServerPingRequestExecutorTest extends BaseTest {
         KubernetesAgentInstances agentInstances = new KubernetesAgentInstances(factory);
         HashMap<String, String> properties = new HashMap<>();
         properties.put("Image", "foo");
-        KubernetesInstance container = agentInstances.create(new CreateAgentRequest(null, properties, null, new JobIdentifier(1L)), createSettings(), pluginRequest);
+        OpenshiftInstance container = agentInstances.create(new CreateAgentRequest(null, properties, null, new JobIdentifier(1L)), createSettings(), pluginRequest);
 
         agentInstances.clock = new Clock.TestClock().forward(Period.minutes(11));
         PluginRequest pluginRequest = mock(PluginRequest.class);
@@ -152,7 +152,7 @@ public class ServerPingRequestExecutorTest extends BaseTest {
         when(pluginRequest.listAgents()).thenReturn(new Agents(Arrays.asList(new Agent("foo", Agent.AgentState.Idle, Agent.BuildState.Idle, Agent.ConfigState.Enabled))));
         verifyNoMoreInteractions(pluginRequest);
 
-        AgentInstances<KubernetesInstance> agentInstances = new KubernetesAgentInstances(factory);
+        AgentInstances<OpenshiftInstance> agentInstances = new KubernetesAgentInstances(factory);
         ServerPingRequestExecutor serverPingRequestExecutor = new ServerPingRequestExecutor(agentInstances, pluginRequest);
         serverPingRequestExecutor.execute();
     }

@@ -34,7 +34,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.net.URL;
 import java.util.List;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static java.text.MessageFormat.format;
 
 public class AgentStatusReportExecutor {

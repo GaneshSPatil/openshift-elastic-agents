@@ -48,8 +48,8 @@ import static org.mockito.MockitoAnnotations.initMocks;
 public class ShouldAssignWorkRequestExecutorTest extends BaseTest {
     @Mock
     KubernetesClientFactory factory;
-    private AgentInstances<KubernetesInstance> agentInstances;
-    private KubernetesInstance instance;
+    private AgentInstances<OpenshiftInstance> agentInstances;
+    private OpenshiftInstance instance;
     private Map<String, String> properties = new HashMap<>();
     @Mock
     private KubernetesClient mockedClient;
@@ -64,7 +64,7 @@ public class ShouldAssignWorkRequestExecutorTest extends BaseTest {
         initMocks(this);
         when(factory.client(any())).thenReturn(mockedClient);
         when(mockedClient.pods()).thenReturn(mockedOperation);
-        
+
         final PodList podList = mock(PodList.class);
         when(mockedOperation.list()).thenReturn(podList);
         when(podList.getItems()).thenReturn(Collections.emptyList());

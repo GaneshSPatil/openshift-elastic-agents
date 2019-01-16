@@ -79,7 +79,7 @@ public class CreateAgentRequest {
         return jobIdentifier;
     }
 
-    public RequestExecutor executor(AgentInstances<KubernetesInstance> agentInstances, PluginRequest pluginRequest) {
+    public RequestExecutor executor(AgentInstances<OpenshiftInstance> agentInstances, PluginRequest pluginRequest) {
         return new CreateAgentRequestExecutor(this, agentInstances, pluginRequest);
     }
 

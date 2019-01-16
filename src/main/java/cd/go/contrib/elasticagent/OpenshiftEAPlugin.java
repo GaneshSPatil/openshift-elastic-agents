@@ -34,11 +34,11 @@ import com.thoughtworks.go.plugin.api.response.GoPluginApiResponse;
 import static cd.go.contrib.elasticagent.Constants.PLUGIN_IDENTIFIER;
 
 @Extension
-public class KubernetesPlugin implements GoPlugin {
-    public static final Logger LOG = Logger.getLoggerFor(KubernetesPlugin.class);
+public class OpenshiftEAPlugin implements GoPlugin {
+    public static final Logger LOG = Logger.getLoggerFor(OpenshiftEAPlugin.class);
 
     private PluginRequest pluginRequest;
-    private AgentInstances<KubernetesInstance> agentInstances;
+    private AgentInstances<OpenshiftInstance> agentInstances;
 
     @Override
     public void initializeGoApplicationAccessor(GoApplicationAccessor accessor) {

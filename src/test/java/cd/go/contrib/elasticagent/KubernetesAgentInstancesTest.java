@@ -86,33 +86,33 @@ public class KubernetesAgentInstancesTest {
 
     @Test
     public void shouldCreateKubernetesPodUsingPodYamlAndCacheCreatedInstance() {
-        KubernetesInstance kubernetesInstance = new KubernetesInstance(new DateTime(), "test", "test-agent", new HashMap<>(), 100L, PodState.Running);
+        OpenshiftInstance openshiftInstance = new OpenshiftInstance(new DateTime(), "test", "test-agent", new HashMap<>(), 100L, PodState.Running);
         when(mockKubernetesInstanceFactory.create(mockCreateAgentRequest, mockPluginSettings, mockKubernetesClient, mockPluginRequest, true)).
-                thenReturn(kubernetesInstance);
+                thenReturn(openshiftInstance);
 
         testProperties.put("SpecifiedUsingPodConfiguration", "true");
 
         KubernetesAgentInstances agentInstances = new KubernetesAgentInstances(factory, mockKubernetesInstanceFactory);
-        KubernetesInstance instance = agentInstances.create(mockCreateAgentRequest, mockPluginSettings, mockPluginRequest);
+        OpenshiftInstance instance = agentInstances.create(mockCreateAgentRequest, mockPluginSettings, mockPluginRequest);
         assertTrue(agentInstances.instanceExists(instance));
     }
 
     @Test
     public void shouldCreateKubernetesPodAndCacheCreatedInstance() {
-        KubernetesInstance kubernetesInstance = new KubernetesInstance(new DateTime(), "test", "test-agent", new HashMap<>(), 100L, PodState.Running);
+        OpenshiftInstance openshiftInstance = new OpenshiftInstance(new DateTime(), "test", "test-agent", new HashMap<>(), 100L, PodState.Running);
         when(mockKubernetesInstanceFactory.create(mockCreateAgentRequest, mockPluginSettings, mockKubernetesClient, mockPluginRequest, false)).
-                thenReturn(kubernetesInstance);
+                thenReturn(openshiftInstance);
         testProperties.put("SpecifiedUsingPodConfiguration", "false");
         KubernetesAgentInstances agentInstances = new KubernetesAgentInstances(factory, mockKubernetesInstanceFactory);
-        KubernetesInstance instance = agentInstances.create(mockCreateAgentRequest, mockPluginSettings, mockPluginRequest);
+        OpenshiftInstance instance = agentInstances.create(mockCreateAgentRequest, mockPluginSettings, mockPluginRequest);
         assertTrue(agentInstances.instanceExists(instance));
     }
 
     @Test
     public void shouldNotCreatePodWhenOutstandingRequestsExistForJobs() {
-        KubernetesInstance kubernetesInstance = new KubernetesInstance(new DateTime(), "test", "test-agent", new HashMap<>(), 100L, PodState.Running);
+        OpenshiftInstance openshiftInstance = new OpenshiftInstance(new DateTime(), "test", "test-agent", new HashMap<>(), 100L, PodState.Running);
         when(mockKubernetesInstanceFactory.create(mockCreateAgentRequest, mockPluginSettings, mockKubernetesClient, mockPluginRequest, false)).
-                thenReturn(kubernetesInstance);
+                thenReturn(openshiftInstance);
         testProperties.put("SpecifiedUsingPodConfiguration", "false");
 
         KubernetesAgentInstances agentInstances = new KubernetesAgentInstances(factory, mockKubernetesInstanceFactory);
@@ -132,7 +132,7 @@ public class KubernetesAgentInstancesTest {
         when(objectMeta.getLabels()).thenReturn(labels);
         when(objectMeta.getName()).thenReturn("test-agent");
         when(podList.getItems()).thenReturn(Arrays.asList(pod));
-        when(mockKubernetesInstanceFactory.fromKubernetesPod(pod)).thenReturn(kubernetesInstance);
+        when(mockKubernetesInstanceFactory.fromKubernetesPod(pod)).thenReturn(openshiftInstance);
 
         agentInstances.create(mockCreateAgentRequest, mockPluginSettings, mockPluginRequest);
         verify(mockKubernetesInstanceFactory, times(0)).create(any(), any(), any(), any(), any());
@@ -144,9 +144,9 @@ public class KubernetesAgentInstancesTest {
         when(mockPluginSettings.getMaxPendingPods()).thenReturn(1);
 
         //pending kubernetes pod
-        KubernetesInstance kubernetesInstance = new KubernetesInstance(new DateTime(), "test", "test-agent", new HashMap<>(), 100L, PodState.Pending);
+        OpenshiftInstance openshiftInstance = new OpenshiftInstance(new DateTime(), "test", "test-agent", new HashMap<>(), 100L, PodState.Pending);
         when(mockKubernetesInstanceFactory.create(mockCreateAgentRequest, mockPluginSettings, mockKubernetesClient, mockPluginRequest, false)).
-                thenReturn(kubernetesInstance);
+                thenReturn(openshiftInstance);
         testProperties.put("SpecifiedUsingPodConfiguration", "false");
 
         //first create agent request
@@ -167,7 +167,7 @@ public class KubernetesAgentInstancesTest {
         when(objectMeta.getLabels()).thenReturn(labels);
         when(objectMeta.getName()).thenReturn("test-agent");
         when(podList.getItems()).thenReturn(Arrays.asList(pod));
-        when(mockKubernetesInstanceFactory.fromKubernetesPod(pod)).thenReturn(kubernetesInstance);
+        when(mockKubernetesInstanceFactory.fromKubernetesPod(pod)).thenReturn(openshiftInstance);
 
         //second create agent request
         agentInstances.create(mockCreateAgentRequest, mockPluginSettings, mockPluginRequest);
@@ -177,7 +177,7 @@ public class KubernetesAgentInstancesTest {
     @Test
     public void shouldSyncPodsStateFromClusterBeforeCreatingPod() {
         when(mockKubernetesInstanceFactory.create(mockCreateAgentRequest, mockPluginSettings, mockKubernetesClient, mockPluginRequest, false)).
-                thenReturn(new KubernetesInstance(new DateTime(), "test", "test-agent", new HashMap<>(), 100L, PodState.Running));
+                thenReturn(new OpenshiftInstance(new DateTime(), "test", "test-agent", new HashMap<>(), 100L, PodState.Running));
 
         final KubernetesAgentInstances agentInstances = new KubernetesAgentInstances(factory, mockKubernetesInstanceFactory);
 

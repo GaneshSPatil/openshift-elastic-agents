@@ -18,27 +18,27 @@
 package cd.go.contrib.elasticagent.executors;
 
 import cd.go.contrib.elasticagent.AgentInstances;
-import cd.go.contrib.elasticagent.KubernetesInstance;
+import cd.go.contrib.elasticagent.OpenshiftInstance;
 import cd.go.contrib.elasticagent.RequestExecutor;
 import cd.go.contrib.elasticagent.requests.ShouldAssignWorkRequest;
 import com.thoughtworks.go.plugin.api.response.DefaultGoPluginApiResponse;
 import com.thoughtworks.go.plugin.api.response.GoPluginApiResponse;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static java.text.MessageFormat.format;
 
 public class ShouldAssignWorkRequestExecutor implements RequestExecutor {
-    private final AgentInstances<KubernetesInstance> agentInstances;
+    private final AgentInstances<OpenshiftInstance> agentInstances;
     private final ShouldAssignWorkRequest request;
 
-    public ShouldAssignWorkRequestExecutor(ShouldAssignWorkRequest request, AgentInstances<KubernetesInstance> agentInstances) {
+    public ShouldAssignWorkRequestExecutor(ShouldAssignWorkRequest request, AgentInstances<OpenshiftInstance> agentInstances) {
         this.request = request;
         this.agentInstances = agentInstances;
     }
 
     @Override
     public GoPluginApiResponse execute() {
-        KubernetesInstance pod = agentInstances.find(request.agent().elasticAgentId());
+        OpenshiftInstance pod = agentInstances.find(request.agent().elasticAgentId());
 
         if (pod == null) {
             return DefaultGoPluginApiResponse.success("false");

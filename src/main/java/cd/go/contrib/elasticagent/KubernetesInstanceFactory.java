@@ -36,7 +36,7 @@ import java.text.ParseException;
 import java.util.*;
 
 import static cd.go.contrib.elasticagent.Constants.*;
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static cd.go.contrib.elasticagent.executors.GetProfileMetadataExecutor.POD_CONFIGURATION;
 import static cd.go.contrib.elasticagent.executors.GetProfileMetadataExecutor.PRIVILEGED;
 import static cd.go.contrib.elasticagent.utils.Util.getSimpleDateFormat;
@@ -45,7 +45,7 @@ import static java.text.MessageFormat.format;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class KubernetesInstanceFactory {
-    public KubernetesInstance create(CreateAgentRequest request, PluginSettings settings, KubernetesClient client, PluginRequest pluginRequest, Boolean usesPodYaml) {
+    public OpenshiftInstance create(CreateAgentRequest request, PluginSettings settings, KubernetesClient client, PluginRequest pluginRequest, Boolean usesPodYaml) {
         if (usesPodYaml) {
             return createUsingPodYaml(request, settings, client, pluginRequest);
         } else {
@@ -53,7 +53,7 @@ public class KubernetesInstanceFactory {
         }
     }
 
-    private KubernetesInstance create(CreateAgentRequest request, PluginSettings settings, KubernetesClient client, PluginRequest pluginRequest) {
+    private OpenshiftInstance create(CreateAgentRequest request, PluginSettings settings, KubernetesClient client, PluginRequest pluginRequest) {
         String containerName = format("{0}-{1}", KUBERNETES_POD_NAME_PREFIX, UUID.randomUUID().toString());
 
         Container container = new Container();
@@ -128,14 +128,14 @@ public class KubernetesInstanceFactory {
         pod.getMetadata().setAnnotations(existingAnnotations);
     }
 
-    private KubernetesInstance createKubernetesPod(KubernetesClient client, Pod elasticAgentPod) {
+    private OpenshiftInstance createKubernetesPod(KubernetesClient client, Pod elasticAgentPod) {
         LOG.info(format("[Create Agent] Creating K8s pod with spec: {0}.", elasticAgentPod.toString()));
         Pod pod = client.pods().create(elasticAgentPod);
         return fromKubernetesPod(pod);
     }
 
-    public KubernetesInstance fromKubernetesPod(Pod elasticAgentPod) {
-        KubernetesInstance kubernetesInstance;
+    public OpenshiftInstance fromKubernetesPod(Pod elasticAgentPod) {
+        OpenshiftInstance openshiftInstance;
         try {
             ObjectMeta metadata = elasticAgentPod.getMetadata();
             DateTime createdAt = DateTime.now().withZone(DateTimeZone.UTC);
@@ -144,11 +144,11 @@ public class KubernetesInstanceFactory {
             }
             String environment = metadata.getLabels().get(ENVIRONMENT_LABEL_KEY);
             Long jobId = Long.valueOf(metadata.getLabels().get(JOB_ID_LABEL_KEY));
-            kubernetesInstance = new KubernetesInstance(createdAt, environment, metadata.getName(), metadata.getAnnotations(), jobId, PodState.fromPod(elasticAgentPod));
+            openshiftInstance = new OpenshiftInstance(createdAt, environment, metadata.getName(), metadata.getAnnotations(), jobId, PodState.fromPod(elasticAgentPod));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-        return kubernetesInstance;
+        return openshiftInstance;
     }
 
     private static List<EnvVar> environmentFrom(CreateAgentRequest request, PluginSettings settings, String podName, PluginRequest pluginRequest) {
@@ -210,7 +210,7 @@ public class KubernetesInstanceFactory {
         return image;
     }
 
-    private KubernetesInstance createUsingPodYaml(CreateAgentRequest request, PluginSettings settings, KubernetesClient client, PluginRequest pluginRequest) {
+    private OpenshiftInstance createUsingPodYaml(CreateAgentRequest request, PluginSettings settings, KubernetesClient client, PluginRequest pluginRequest) {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         String podYaml = request.properties().get(POD_CONFIGURATION.getKey());
         String templatizedPodYaml = getTemplatizedPodYamlString(podYaml);

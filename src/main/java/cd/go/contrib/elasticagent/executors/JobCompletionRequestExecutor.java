@@ -24,15 +24,15 @@ import com.thoughtworks.go.plugin.api.response.GoPluginApiResponse;
 import java.util.Arrays;
 import java.util.List;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static java.text.MessageFormat.format;
 
 public class JobCompletionRequestExecutor implements RequestExecutor {
     private final JobCompletionRequest jobCompletionRequest;
-    private final AgentInstances<KubernetesInstance> agentInstances;
+    private final AgentInstances<OpenshiftInstance> agentInstances;
     private final PluginRequest pluginRequest;
 
-    public JobCompletionRequestExecutor(JobCompletionRequest jobCompletionRequest, AgentInstances<KubernetesInstance> agentInstances, PluginRequest pluginRequest) {
+    public JobCompletionRequestExecutor(JobCompletionRequest jobCompletionRequest, AgentInstances<OpenshiftInstance> agentInstances, PluginRequest pluginRequest) {
         this.jobCompletionRequest = jobCompletionRequest;
         this.agentInstances = agentInstances;
         this.pluginRequest = pluginRequest;

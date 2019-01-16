@@ -31,13 +31,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static cd.go.contrib.elasticagent.executors.GetProfileMetadataExecutor.SPECIFIED_USING_POD_CONFIGURATION;
 import static cd.go.contrib.elasticagent.utils.Util.getSimpleDateFormat;
 import static java.text.MessageFormat.format;
 
-public class KubernetesAgentInstances implements AgentInstances<KubernetesInstance> {
-    private final ConcurrentHashMap<String, KubernetesInstance> instances = new ConcurrentHashMap<>();
+public class KubernetesAgentInstances implements AgentInstances<OpenshiftInstance> {
+    private final ConcurrentHashMap<String, OpenshiftInstance> instances = new ConcurrentHashMap<>();
     public Clock clock = Clock.DEFAULT;
     final Semaphore semaphore = new Semaphore(0, true);
 
@@ -58,7 +58,7 @@ public class KubernetesAgentInstances implements AgentInstances<KubernetesInstan
     }
 
     @Override
-    public KubernetesInstance create(CreateAgentRequest request, PluginSettings settings, PluginRequest pluginRequest) {
+    public OpenshiftInstance create(CreateAgentRequest request, PluginSettings settings, PluginRequest pluginRequest) {
         final Integer maxAllowedContainers = settings.getMaxPendingPods();
         synchronized (instances) {
             refreshAll(pluginRequest);
@@ -79,7 +79,7 @@ public class KubernetesAgentInstances implements AgentInstances<KubernetesInstan
         }
     }
 
-    private KubernetesInstance createKubernetesInstance(CreateAgentRequest request, PluginSettings settings, PluginRequest pluginRequest) {
+    private OpenshiftInstance createKubernetesInstance(CreateAgentRequest request, PluginSettings settings, PluginRequest pluginRequest) {
         JobIdentifier jobIdentifier = request.jobIdentifier();
         if (isAgentCreatedForJob(jobIdentifier.getJobId())) {
             LOG.warn(format("[Create Agent Request] Request for creating an agent for Job Identifier [{0}] has already been scheduled. Skipping current request.", jobIdentifier));
@@ -87,14 +87,14 @@ public class KubernetesAgentInstances implements AgentInstances<KubernetesInstan
         }
 
         KubernetesClient client = factory.client(settings);
-        KubernetesInstance instance = kubernetesInstanceFactory.create(request, settings, client, pluginRequest, isUsingPodYaml(request));
+        OpenshiftInstance instance = kubernetesInstanceFactory.create(request, settings, client, pluginRequest, isUsingPodYaml(request));
         register(instance);
 
         return instance;
     }
 
     private boolean isAgentCreatedForJob(Long jobId) {
-        for (KubernetesInstance instance : instances.values()) {
+        for (OpenshiftInstance instance : instances.values()) {
             if (instance.jobId().equals(jobId)) {
                 return true;
             }
@@ -109,7 +109,7 @@ public class KubernetesAgentInstances implements AgentInstances<KubernetesInstan
 
     @Override
     public void terminate(String agentId, PluginSettings settings) {
-        KubernetesInstance instance = instances.get(agentId);
+        OpenshiftInstance instance = instances.get(agentId);
         if (instance != null) {
             KubernetesClient client = factory.client(settings);
             instance.terminate(client);
@@ -136,7 +136,7 @@ public class KubernetesAgentInstances implements AgentInstances<KubernetesInstan
     public Agents instancesCreatedAfterTimeout(PluginSettings settings, Agents agents) {
         ArrayList<Agent> oldAgents = new ArrayList<>();
         for (Agent agent : agents.agents()) {
-            KubernetesInstance instance = instances.get(agent.elasticAgentId());
+            OpenshiftInstance instance = instances.get(agent.elasticAgentId());
             if (instance == null) {
                 continue;
             }
@@ -168,11 +168,11 @@ public class KubernetesAgentInstances implements AgentInstances<KubernetesInstan
     }
 
     @Override
-    public KubernetesInstance find(String agentId) {
+    public OpenshiftInstance find(String agentId) {
         return instances.get(agentId);
     }
 
-    private void register(KubernetesInstance instance) {
+    private void register(OpenshiftInstance instance) {
         instances.put(instance.name(), instance);
     }
 
@@ -211,7 +211,7 @@ public class KubernetesAgentInstances implements AgentInstances<KubernetesInstan
         }
     }
 
-    public boolean instanceExists(KubernetesInstance instance) {
+    public boolean instanceExists(OpenshiftInstance instance) {
         return instances.contains(instance);
     }
 }

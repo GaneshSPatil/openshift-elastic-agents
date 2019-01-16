@@ -22,7 +22,7 @@ import org.joda.time.DateTimeZone;
 
 import java.util.Map;
 
-public class KubernetesInstance {
+public class OpenshiftInstance {
     private final DateTime createdAt;
     private final String environment;
     private final String name;
@@ -30,7 +30,7 @@ public class KubernetesInstance {
     private final Long jobId;
     private final PodState state;
 
-    public KubernetesInstance(DateTime createdAt, String environment, String name, Map<String, String> properties, Long jobId, PodState state) {
+    public OpenshiftInstance(DateTime createdAt, String environment, String name, Map<String, String> properties, Long jobId, PodState state) {
         this.createdAt = createdAt.withZone(DateTimeZone.UTC);
         this.environment = environment;
         this.name = name;

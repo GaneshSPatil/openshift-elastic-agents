@@ -24,7 +24,7 @@ import com.thoughtworks.go.plugin.api.response.GoApiResponse;
 import java.util.Collection;
 
 import static cd.go.contrib.elasticagent.Constants.*;
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static java.text.MessageFormat.format;
 
 public class PluginRequest {

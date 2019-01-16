@@ -40,7 +40,7 @@ public class JobCompletionRequestExecutorTest {
     @Mock
     private PluginRequest mockPluginRequest;
     @Mock
-    private AgentInstances<KubernetesInstance> mockAgentInstances;
+    private AgentInstances<OpenshiftInstance> mockAgentInstances;
 
     @Captor
     private ArgumentCaptor<List<Agent>> agentsArgumentCaptor;

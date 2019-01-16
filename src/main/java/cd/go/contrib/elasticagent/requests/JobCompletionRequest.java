@@ -17,19 +17,12 @@
 package cd.go.contrib.elasticagent.requests;
 
 import cd.go.contrib.elasticagent.*;
-import cd.go.contrib.elasticagent.executors.CreateAgentRequestExecutor;
 import cd.go.contrib.elasticagent.executors.JobCompletionRequestExecutor;
 import cd.go.contrib.elasticagent.model.JobIdentifier;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import io.fabric8.kubernetes.api.model.EnvVar;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
 
 import static cd.go.contrib.elasticagent.utils.Util.GSON;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 public class JobCompletionRequest {
     @Expose
@@ -60,7 +53,7 @@ public class JobCompletionRequest {
         return jobIdentifier;
     }
 
-    public RequestExecutor executor(AgentInstances<KubernetesInstance> agentInstances, PluginRequest pluginRequest) {
+    public RequestExecutor executor(AgentInstances<OpenshiftInstance> agentInstances, PluginRequest pluginRequest) {
         return new JobCompletionRequestExecutor(this, agentInstances, pluginRequest);
     }
 

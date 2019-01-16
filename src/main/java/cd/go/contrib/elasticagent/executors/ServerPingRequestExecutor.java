@@ -22,15 +22,15 @@ import com.thoughtworks.go.plugin.api.response.GoPluginApiResponse;
 
 import java.util.Collection;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static java.text.MessageFormat.format;
 
 public class ServerPingRequestExecutor implements RequestExecutor {
 
-    private final AgentInstances<KubernetesInstance> agentInstances;
+    private final AgentInstances<OpenshiftInstance> agentInstances;
     private final PluginRequest pluginRequest;
 
-    public ServerPingRequestExecutor(AgentInstances<KubernetesInstance> agentInstances, PluginRequest pluginRequest) {
+    public ServerPingRequestExecutor(AgentInstances<OpenshiftInstance> agentInstances, PluginRequest pluginRequest) {
         this.agentInstances = agentInstances;
         this.pluginRequest = pluginRequest;
     }

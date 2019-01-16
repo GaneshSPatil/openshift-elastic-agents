@@ -24,7 +24,7 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
-import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
+import static cd.go.contrib.elasticagent.OpenshiftEAPlugin.LOG;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
