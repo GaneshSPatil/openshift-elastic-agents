@@ -19,13 +19,13 @@ package cd.go.contrib.elasticagent.executors;
 import cd.go.contrib.elasticagent.KubernetesClientFactory;
 import cd.go.contrib.elasticagent.PluginRequest;
 import cd.go.contrib.elasticagent.builders.PluginStatusReportViewBuilder;
-import cd.go.contrib.elasticagent.model.KubernetesCluster;
 import cd.go.contrib.elasticagent.reports.StatusReportGenerationErrorHandler;
 import com.google.gson.JsonObject;
 import com.thoughtworks.go.plugin.api.response.DefaultGoPluginApiResponse;
 import com.thoughtworks.go.plugin.api.response.GoPluginApiResponse;
-import freemarker.template.Template;
 import io.fabric8.kubernetes.client.KubernetesClient;
+
+import java.net.URL;
 
 import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
 
@@ -49,10 +49,14 @@ public class StatusReportExecutor {
         try {
             LOG.info("[status-report] Generating status report.");
             KubernetesClient client = factory.client(pluginRequest.getPluginSettings());
-            final KubernetesCluster kubernetesCluster = new KubernetesCluster(client);
-            final Template template = statusReportViewBuilder.getTemplate("status-report.template.ftlh");
-            final String statusReportView = statusReportViewBuilder.build(template, kubernetesCluster);
+            String projectOverviewUrl = new URL(client.getMasterUrl(), "console/project/" + client.getNamespace() + "/browse/pods").toString();
+            LOG.info(String.format("Redirecting user to %s", projectOverviewUrl));
 
+//            final KubernetesCluster kubernetesCluster = new KubernetesCluster(client);
+//            final Template template = statusReportViewBuilder.getTemplate("status-report.template.ftlh");
+//            final String statusReportView = statusReportViewBuilder.build(template, kubernetesCluster);
+
+            final String statusReportView = "<meta http-equiv=\"refresh\" content=\"0; url=" + projectOverviewUrl + "\" />";
             final JsonObject responseJSON = new JsonObject();
             responseJSON.addProperty("view", statusReportView);
 

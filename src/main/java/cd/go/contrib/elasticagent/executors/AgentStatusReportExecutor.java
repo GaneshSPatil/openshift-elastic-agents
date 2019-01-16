@@ -21,7 +21,6 @@ import cd.go.contrib.elasticagent.KubernetesClientFactory;
 import cd.go.contrib.elasticagent.PluginRequest;
 import cd.go.contrib.elasticagent.builders.PluginStatusReportViewBuilder;
 import cd.go.contrib.elasticagent.model.JobIdentifier;
-import cd.go.contrib.elasticagent.model.reports.agent.KubernetesElasticAgent;
 import cd.go.contrib.elasticagent.reports.StatusReportGenerationErrorHandler;
 import cd.go.contrib.elasticagent.reports.StatusReportGenerationException;
 import cd.go.contrib.elasticagent.requests.AgentStatusReportRequest;
@@ -32,6 +31,7 @@ import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import org.apache.commons.lang3.StringUtils;
 
+import java.net.URL;
 import java.util.List;
 
 import static cd.go.contrib.elasticagent.KubernetesPlugin.LOG;
@@ -68,10 +68,10 @@ public class AgentStatusReportExecutor {
                 pod = findPodUsingJobIdentifier(jobIdentifier, client);
             }
 
-            KubernetesElasticAgent elasticAgent = KubernetesElasticAgent.fromPod(client, pod, jobIdentifier);
+            String podDetailsPageUrl = new URL(client.getMasterUrl(), "console/project/" + client.getNamespace() + "/browse/pods/" + pod.getMetadata().getName()).toString();
+            LOG.info(String.format("Redirecting user to %s", podDetailsPageUrl));
 
-            final String statusReportView = statusReportViewBuilder.build(statusReportViewBuilder.getTemplate("agent-status-report.template.ftlh"), elasticAgent);
-
+            final String statusReportView = "<meta http-equiv=\"refresh\" content=\"0; url=" + podDetailsPageUrl + "\" />";
             final JsonObject responseJSON = new JsonObject();
             responseJSON.addProperty("view", statusReportView);
 
